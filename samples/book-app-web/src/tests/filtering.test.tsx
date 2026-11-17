@@ -18,6 +18,16 @@ describe("filterBooks", () => {
     expect(results.map((book) => book.title)).toEqual(["The Hobbit"]);
   });
 
+  it("returns the same results for uppercase and lowercase searches", () => {
+    for (const term of ["hobbit", "tolkien"]) {
+      const lower = filterBooks(books, { ...defaultFilters, searchTerm: term.toLowerCase() });
+      const upper = filterBooks(books, { ...defaultFilters, searchTerm: term.toUpperCase() });
+
+      expect(lower.length).toBeGreaterThan(0);
+      expect(upper).toEqual(lower);
+    }
+  });
+
   it("filters by genre and reading status together", () => {
     const results = filterBooks(books, {
       ...defaultFilters,
